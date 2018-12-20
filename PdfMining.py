@@ -5,6 +5,7 @@ from pdfminer.layout import LAParams
 from nltk.corpus import stopwords
 from cStringIO import StringIO  # for python 3.x use: from io import StringIO
 import os
+import re
 
 
 def pdf_to_text(pdfname):
@@ -44,12 +45,12 @@ txtFile.close()
 tokenName = "./txt/" + pdfname + "2.txt"  # txt that contains token
 tokenFile = open(tokenName, "w+")
 
-punctuations = ['(', ')', ';', ':', '[', ']', ',']
+punctuations = ['(', ')', ';', ':', '[', ']', ',', '']
 stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
 
 with open(txtname, "r") as f:
     for line in f:
-        for word in line.split():
+        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|-|=', line):
             if word not in punctuations and word not in stop_words:
                 text.append(word)
                 tokenFile.write(word + "\n")
