@@ -46,12 +46,14 @@ tokenName = "./txt/" + pdfname + "2.txt"  # txt that contains token
 tokenFile = open(tokenName, "w+", encoding='utf-8')
 
 punctuations = ['(', ')', ';', ':', '[', ']', ',', '']
-#stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
+# stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
 stop_words = stopwords.words('english')
-numbers= ['0','1','2','3','4','5','6','7','8','9']
-greekLetters=['Α','α','Β','β','Γ','γ','Δ','δ','Ε','ε','Ζ','ζ','Η','η','Θ','θ','Ι','ι','Κ','κ','Λ','λ','Μ','μ'
-                 ,'Ν','ν','Ξ','ξ','Ο','ο','Π','π','Ρ','ρ','Σ','σ','ς','Τ','τ','Υ','υ','Φ','φ','Χ','χ','Ψ','ψ','Ω','ω']
-mathSymbols=['exp','^','+','-']
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+greekLetters = ['Α', 'α', 'Β', 'β', 'Γ', 'γ', 'Δ', 'δ', 'Ε', 'ε', 'Ζ', 'ζ', 'Η', 'η', 'Θ', 'θ', 'Ι', 'ι', 'Κ', 'κ', 'Λ',
+                'λ', 'Μ', 'μ'
+    , 'Ν', 'ν', 'Ξ', 'ξ', 'Ο', 'ο', 'Π', 'π', 'Ρ', 'ρ', 'Σ', 'σ', 'ς', 'Τ', 'τ', 'Υ', 'υ', 'Φ', 'φ', 'Χ', 'χ', 'Ψ', 'ψ',
+                'Ω', 'ω']
+mathSymbols = ['exp', '^', '+', '-']
 with open(txtname, "r", encoding='utf-8') as f:
     for line in f:
         for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=', line):
@@ -60,7 +62,7 @@ with open(txtname, "r", encoding='utf-8') as f:
                 numberFlag = False
                 mathFlag = False
                 if word.endswith('-'):
-                    notEndedWordFlag = True;
+                    notEndedWordFlag = True
                 for character in word:
                     if character == '“':
                         word = word.replace('“', '')
@@ -73,14 +75,15 @@ with open(txtname, "r", encoding='utf-8') as f:
                     elif character == '-':
                         word = word.replace('-', '')
                     elif character in numbers:
-                        numberFlag=True
+                        numberFlag = True
                     elif character in greekLetters or character in mathSymbols:
                         mathFlag = True
-                text.append(word)
-                if len(word) > 2 and numberFlag==False and mathFlag==False:
+                if len(word) > 2 and numberFlag is False and mathFlag is False:
+                    text.append(word)
                     if notEndedWordFlag:
                         tokenFile.write(word)
                     else:
-                        tokenFile.write(word + "\n")
+                        tokenFile.write(word + " ")
+print(text)
 tokenFile.close()
 os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
