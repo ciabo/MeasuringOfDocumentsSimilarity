@@ -53,7 +53,11 @@ with open(txtname, "r",encoding='utf-8') as f:
         for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|-|=', line):
             if word not in punctuations and word not in stop_words:
                 for character in word:
-                    if character=='ﬂ':
+                    if character=='“':
+                        word = word.replace('“', '')
+                    elif character=='”':
+                        word = word.replace('”', '')
+                    elif character=='ﬂ':
                         word=word.replace('ﬂ','fl')
                     elif character=='ﬁ':
                         word = word.replace('ﬁ', 'fi')
