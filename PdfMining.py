@@ -3,7 +3,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from nltk.corpus import stopwords
-from cStringIO import StringIO  # for python 3.x use: from io import StringIO
+from io import StringIO  # for python 3.x use: from io import StringIO
 import os
 import re
 
@@ -52,8 +52,15 @@ with open(txtname, "r",encoding='utf-8') as f:
     for line in f:
         for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|-|=', line):
             if word not in punctuations and word not in stop_words:
+                for character in word:
+                    if character=='ﬂ':
+                        word=word.replace('ﬂ','fl')
+                    elif character=='ﬁ':
+                        word = word.replace('ﬁ', 'fi')
                 text.append(word)
                 tokenFile.write(word + "\n")
-    print(text)
+
+
+
 tokenFile.close()
 os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
