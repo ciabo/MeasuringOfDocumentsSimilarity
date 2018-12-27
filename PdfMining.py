@@ -76,11 +76,11 @@ with open(txtname, "r", encoding='utf-8') as f:
                         numberFlag=True
                     elif character in greekLetters or character in mathSymbols:
                         mathFlag = True
+                text.append(word)
                 if len(word) > 2 and numberFlag==False and mathFlag==False:
                     if notEndedWordFlag:
                         tokenFile.write(word)
                     else:
                         tokenFile.write(word + "\n")
-                        text.append(word)
 tokenFile.close()
 os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
