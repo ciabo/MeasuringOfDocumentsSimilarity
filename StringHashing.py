@@ -6,20 +6,15 @@ txtshingles = "./txt/" + pdfname + "Shingle2.txt"
 
 m = 100000
 alphabet = {chr(i + 96): i for i in range(1, 27)}
+alphabet.update({1: 0})
 print(alphabet)
-sss = "casa"
-print(alphabet.get('a'))
 
 
 def hashShingle(line, m):
     encode = 0
-    i = 1
+    i = 2
     while len(line) > i:
-        character=line[i]
-        characterlow=line[i].lower()
-        test=alphabet[characterlow]
-        encode=encode+test*math.pow(31,i)
-        encode = encode + alphabet[line[i].lower()] * math.pow(31, i)
+        encode += alphabet[1 if line[i].lower() == "\n" or line[i].lower() == " " else line[i].lower()] * math.pow(31,i)
         i += 1
     return encode % m
 
