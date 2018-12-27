@@ -37,43 +37,42 @@ filename = "./Document/" + pdfname + ".pdf"
 # create a txt to tokenize
 txt = pdf_to_text(filename)
 txtname = "./txt/" + pdfname + ".txt"
-txtFile = open(txtname, "w",encoding='utf-8')
+txtFile = open(txtname, "w", encoding='utf-8')
 txtFile.write(txt)
 text = []
 txtFile.close()
 
 tokenName = "./txt/" + pdfname + "2.txt"  # txt that contains token
-tokenFile = open(tokenName, "w+",encoding='utf-8')
+tokenFile = open(tokenName, "w+", encoding='utf-8')
 
 punctuations = ['(', ')', ';', ':', '[', ']', ',', '']
-stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
+#stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
+stop_words = stopwords.words('english')
 
-with open(txtname, "r",encoding='utf-8') as f:
+with open(txtname, "r", encoding='utf-8') as f:
     for line in f:
         for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=', line):
             if word not in punctuations and word not in stop_words:
-                notEndedWordFlag=False
+                notEndedWordFlag = False
                 if word.endswith('-'):
-                    notEndedWordFlag=True;
+                    notEndedWordFlag = True;
                 for character in word:
-                    if character=='“':
+                    if character == '“':
                         word = word.replace('“', '')
-                    elif character=='”':
+                    elif character == '”':
                         word = word.replace('”', '')
-                    elif character=='ﬂ':
-                        word=word.replace('ﬂ','fl')
-                    elif character=='ﬁ':
+                    elif character == 'ﬂ':
+                        word = word.replace('ﬂ', 'fl')
+                    elif character == 'ﬁ':
                         word = word.replace('ﬁ', 'fi')
-                    elif character=='-':
+                    elif character == '-':
                         word = word.replace('-', '')
                 text.append(word)
-                if(len(word)>=2):
+                if len(word) >= 2:
                     if notEndedWordFlag:
                         tokenFile.write(word)
                     else:
                         tokenFile.write(word + "\n")
-
-
-
+    print(text)
 tokenFile.close()
 os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
