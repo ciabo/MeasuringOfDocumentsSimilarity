@@ -50,8 +50,11 @@ stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
 
 with open(txtname, "r",encoding='utf-8') as f:
     for line in f:
-        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|-|=', line):
+        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=', line):
             if word not in punctuations and word not in stop_words:
+                notEndedWordFlag=False
+                if word.endswith('-'):
+                    notEndedWordFlag=True;
                 for character in word:
                     if character=='“':
                         word = word.replace('“', '')
@@ -61,8 +64,14 @@ with open(txtname, "r",encoding='utf-8') as f:
                         word=word.replace('ﬂ','fl')
                     elif character=='ﬁ':
                         word = word.replace('ﬁ', 'fi')
+                    elif character=='-':
+                        word = word.replace('-', '')
                 text.append(word)
-                tokenFile.write(word + "\n")
+                if(len(word)>=2):
+                    if notEndedWordFlag:
+                        tokenFile.write(word)
+                    else:
+                        tokenFile.write(word + "\n")
 
 
 
