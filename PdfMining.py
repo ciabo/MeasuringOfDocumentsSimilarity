@@ -45,7 +45,7 @@ txtFile.close()
 tokenName = "./txt/" + pdfname + "2.txt"  # txt that contains token
 tokenFile = open(tokenName, "w+", encoding='utf-8')
 
-punctuations = ['(', ')', ';', ':', '[', ']', ',', '']
+punctuations = ['(', ')', ';', ':', '[', ']', ',', '', '@']
 # stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
 stop_words = stopwords.words('english')
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -56,7 +56,7 @@ greekLetters = ['Α', 'α', 'Β', 'β', 'Γ', 'γ', 'Δ', 'δ', 'Ε', 'ε', 'Ζ'
 mathSymbols = ['exp', '^', '+', '-']
 with open(txtname, "r", encoding='utf-8') as f:
     for line in f:
-        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=', line):
+        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=|@', line):
             if word not in punctuations and word not in stop_words:
                 notEndedWordFlag = False
                 numberFlag = False
