@@ -20,6 +20,7 @@ def minHash(matrix, numberOfDocuments, shingleNumber, permutationNumber=100):
                 if hashedIndex[j] < minHash[k]:
                     minHash[k] = hashedIndex[j]  # minHash contain the value of the row corresponding to the one
         minHashes.append(minHash)  # minHashes contain all the minhash
+    print("MinHashing ultimated")
     return minHashes
 
 
