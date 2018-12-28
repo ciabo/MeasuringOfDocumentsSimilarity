@@ -8,11 +8,13 @@ from StringHashing import generateHash
 
 def main():
     m = 1000000009
+    pdfdir = "Document"  # pdf directory
+    txtdir = "txt"  # select txt directory
     pdfname = input("Insert pdf name: ")
-    rename_pdf()
-    tokenizePdf(pdfname)
-    generateShingles(pdfname)
-    generateHash(pdfname, m)
+    rename_pdf(pdfdir)
+    tokenizePdf(pdfname, txtdir)
+    generateShingles(pdfname, txtdir)
+    hashes = generateHash(pdfname, txtdir, m)
     # minHash()
     # LSH()
 

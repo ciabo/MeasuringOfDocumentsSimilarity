@@ -11,13 +11,14 @@ def hashShingle(line, m, alphabet):
     return encode % m
 
 
-def generateHash(pdfname, m):
+def generateHash(pdfname, txtdir, m):
     alphabet = {chr(i + 96): i for i in range(1, 27)}
     alphabet.update({1: 0})
-    txtShingles = "./txt/" + pdfname + "Shingle.txt"
+    txtShingles = "./" + txtdir + "/" + pdfname + "Shingle.txt"
     hashes = bitarray(m)
     hashes.setall(0)
     with open(txtShingles, "r", encoding='utf-8') as f:
         for line in f:
             hashes[int(hashShingle(line, m, alphabet))] = 1
     print("Hashes generated")
+    return hashes

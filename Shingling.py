@@ -1,6 +1,6 @@
-def generateShingles(pdfname):
-    txtname = "./txt/" + pdfname + "token.txt"
-    txtshingles = "./txt/" + pdfname + "Shingle.txt"
+def generateShingles(pdfname, txtdir):
+    txtname = "./" + txtdir + "/" + pdfname + "token.txt"
+    txtshingles = "./" + txtdir + "/" + pdfname + "Shingle.txt"
     shinglesFile = open(txtshingles, "w+", encoding='utf-8')
 
     k = 10
