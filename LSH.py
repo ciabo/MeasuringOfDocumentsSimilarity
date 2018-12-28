@@ -1,29 +1,35 @@
-import numpy as np
+import math
 
-
-def LSH(minHashes, numberOfBands, numberOfDocuments, newHashDim):
+#--------BUG: se ci sono 7righe nei minhash e divido per 3 mi da 2 bande da 3 e schianta perchè la terza banda è da 1
+def LSH(minHashes, numberOfBands, numberOfDocuments):
     bandDim = len(minHashes) // numberOfBands  # For python 2 change // with /
+    newHashDim = int(math.pow(10,bandDim)) #10^bandDim
     documentCandidates = []
     for i in range(0, numberOfBands):
         bandedMinHashes = []
         checkCandidates = []
-        for i in range(0, newHashDim):
+        for l in range(0, newHashDim):
             newList = []
             checkCandidates.append(newList)
         for j in range(0, numberOfDocuments):
             bandedMinHash = []
             for k in range(0, bandDim):
-                bandedMinHash.append(minHashes[k][j])  # in bandedHash there is the minhash for the document j
+                bandedMinHash.append(minHashes[k+(bandDim*i)][j])  # in bandedHash there is the minhash for the document j
             bandedMinHashes.append(bandedMinHash)  # bandedHashes is the list of all minhashes of all documnets
             # check if two or more newHashes are equals
-            checkCandidates[listHash(bandedMinHash)].append(documentIdx)
-        for i in range(0, len(checkCandidates)):
-            if len(checkCandidates[i]) >= 2:
-                documentCandidates.append(checkCandidates[i])
+            leng=len(checkCandidates)
+            checkCandidates[listHash(bandedMinHash,newHashDim)].append(j)#j is the current document index
+        for z in range(0, len(checkCandidates)):
+            if len(checkCandidates[z]) >= 2:
+                documentCandidates.append(checkCandidates[z])
     print("LSH ended")
     return documentCandidates
 
 
-def listHash(list):
-    newHash = []
+def listHash(list,m):
+    encode=""
+    for i in range(0,len(list)):
+        encode+=str(list[i])
+    val=int(encode)
+    newHash=val%m
     return newHash
