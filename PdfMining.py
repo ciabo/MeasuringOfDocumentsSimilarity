@@ -45,18 +45,18 @@ txtFile.close()
 tokenName = "./txt/" + pdfname + "2.txt"  # txt that contains token
 tokenFile = open(tokenName, "w+", encoding='utf-8')
 
-punctuations = ['(', ')', ';', ':', '[', ']', ',', '', '@']
+punctuations = ['(', ')', ';', ':', '[', ']', ',', '', '@', '{', '}']
 # stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
 stop_words = stopwords.words('english')
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 greekLetters = ['Α', 'α', 'Β', 'β', 'Γ', 'γ', 'Δ', 'δ', 'Ε', 'ε', 'Ζ', 'ζ', 'Η', 'η', 'Θ', 'θ', 'Ι', 'ι', 'Κ', 'κ', 'Λ',
                 'λ', 'Μ', 'μ'
     , 'Ν', 'ν', 'Ξ', 'ξ', 'Ο', 'ο', 'Π', 'π', 'Ρ', 'ρ', 'Σ', 'σ', 'ς', 'Τ', 'τ', 'Υ', 'υ', 'Φ', 'φ', 'Χ', 'χ', 'Ψ', 'ψ',
-                'Ω', 'ω']
+                'Ω', 'ω', '⎠', '|', '∈', '⎜']
 mathSymbols = ['exp', '^', '+', '-']
 with open(txtname, "r", encoding='utf-8') as f:
     for line in f:
-        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=|@', line):
+        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=|@|\||\{|\}', line):
             if word not in punctuations and word not in stop_words:
                 notEndedWordFlag = False
                 numberFlag = False
@@ -64,16 +64,20 @@ with open(txtname, "r", encoding='utf-8') as f:
                 if word.endswith('-'):
                     notEndedWordFlag = True
                 for character in word:
-                    if character == '“':
+                    if character == '“' or character == '\u2018' or character == '\u2019' or character == 'ˆ':
                         word = word.replace('“', '')
+                        word = word.replace('ˆ', '')
+                        word = word.replace('\u2018', '')
+                        word = word.replace('\u2019', '')
                     elif character == '”':
                         word = word.replace('”', '')
                     elif character == 'ﬂ':
                         word = word.replace('ﬂ', 'fl')
                     elif character == 'ﬁ':
                         word = word.replace('ﬁ', 'fi')
-                    elif character == '-':
+                    elif character == '-' or character == '\u2014':
                         word = word.replace('-', '')
+                        word = word.replace('\u2014', '')
                     elif character in numbers:
                         numberFlag = True
                     elif character in greekLetters or character in mathSymbols:
