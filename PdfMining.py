@@ -104,4 +104,4 @@ def tokenizePdf(pdfname, txtdir):
                             tokenFile.write(word + " ")
     tokenFile.close()
     os.remove("./" + txtdir + "/" + pdfname + ".txt")  # erase the txt used to tokenize
-    print("Mining ended")
+
