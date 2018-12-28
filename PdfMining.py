@@ -9,12 +9,12 @@ import re
 
 
 # if executed more than 1 time delete files!!
-def rename_pdf():
+def rename_pdf(pdfdir):
     answer = input("Do you want rename pdfs?(Do it just one time) [y][n] ")
     print(" ")
     if answer == "y":
         i = 0
-        basepath = "./Document/"
+        basepath = "./" + pdfdir + "/"
         for fname in os.listdir(basepath):
             os.rename(os.path.join(basepath, fname), os.path.join(basepath, "Doc" + str(i) + ".pdf"))
             i += 1
@@ -44,17 +44,17 @@ def pdf_to_text(pdfname):
     return text
 
 
-def tokenizePdf(pdfname):
+def tokenizePdf(pdfname, txtdir):
     filename = "./Document/" + pdfname + ".pdf"
     # create a txt to tokenize
     txt = pdf_to_text(filename)
-    txtname = "./txt/" + pdfname + ".txt"
+    txtname = "./" + txtdir + "/" + pdfname + ".txt"
     txtFile = open(txtname, "w", encoding='utf-8')
     txtFile.write(txt)
     text = []
     txtFile.close()
 
-    tokenName = "./txt/" + pdfname + "token.txt"  # txt that contains token
+    tokenName = "./" + txtdir + "/" + pdfname + "token.txt"  # txt that contains token
     tokenFile = open(tokenName, "w+", encoding='utf-8')
 
     punctuations = ['(', ')', ';', ':', '[', ']', ',', '', '@', '{', '}']
@@ -103,5 +103,5 @@ def tokenizePdf(pdfname):
                         else:
                             tokenFile.write(word + " ")
     tokenFile.close()
-    os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
+    os.remove("./" + txtdir + "/" + pdfname + ".txt")  # erase the txt used to tokenize
     print("Mining ended")
