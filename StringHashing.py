@@ -1,5 +1,4 @@
 import math
-import numpy as np
 from bitarray import bitarray
 
 pdfname = "4Doc"  # number of document
@@ -25,7 +24,6 @@ def generateHash(path, m):
     with open(path, "r", encoding='utf-8') as f:
         for line in f:
             hashes[int(hashShingle(line, m))] = 1
-    print(hashes)
 
 
 generateHash(txtshingles, m)

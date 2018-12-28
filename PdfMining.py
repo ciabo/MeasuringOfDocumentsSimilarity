@@ -8,6 +8,19 @@ import os
 import re
 
 
+def rename_pdf():
+    answer = input("Do you want rename pdfs? [y][n] ")
+    if answer == "y":
+        i = 0
+        basepath = "./data/"
+        for fname in os.listdir(basepath):
+            os.rename(os.path.join(basepath, fname), os.path.join(basepath, "Doc" + str(i) + ".pdf"))
+            i += 1
+
+
+rename_pdf()  # if executed more than 1 time delete files!!
+
+
 def pdf_to_text(pdfname):
     rsrcmgr = PDFResourceManager()  # used to handle interpreter and device
     output = StringIO()  # destination of interpreter processing
@@ -32,7 +45,7 @@ def pdf_to_text(pdfname):
     return text
 
 
-pdfname = "4Doc"  # number of document
+pdfname = "Doc0"  # number of document
 filename = "./Document/" + pdfname + ".pdf"
 # create a txt to tokenize
 txt = pdf_to_text(filename)
@@ -42,7 +55,7 @@ txtFile.write(txt)
 text = []
 txtFile.close()
 
-tokenName = "./txt/" + pdfname + "2.txt"  # txt that contains token
+tokenName = "./txt/" + pdfname + "token.txt"  # txt that contains token
 tokenFile = open(tokenName, "w+", encoding='utf-8')
 
 punctuations = ['(', ')', ';', ':', '[', ']', ',', '', '@', '{', '}']
@@ -88,6 +101,5 @@ with open(txtname, "r", encoding='utf-8') as f:
                         tokenFile.write(word)
                     else:
                         tokenFile.write(word + " ")
-print(text)
 tokenFile.close()
 os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
