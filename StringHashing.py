@@ -1,15 +1,8 @@
 import math
 from bitarray import bitarray
 
-pdfname = "4Doc"  # number of document
-txtshingles = "./txt/" + pdfname + "Shingle2.txt"
 
-m = 1000000009
-alphabet = {chr(i + 96): i for i in range(1, 27)}
-alphabet.update({1: 0})
-
-
-def hashShingle(line, m):
+def hashShingle(line, m, alphabet):
     encode = 0
     i = 2
     while len(line) > i:
@@ -18,12 +11,13 @@ def hashShingle(line, m):
     return encode % m
 
 
-def generateHash(path, m):
+def generateHash(pdfname, m):
+    alphabet = {chr(i + 96): i for i in range(1, 27)}
+    alphabet.update({1: 0})
+    txtShingles = "./txt/" + pdfname + "Shingle.txt"
     hashes = bitarray(m)
     hashes.setall(0)
-    with open(path, "r", encoding='utf-8') as f:
+    with open(txtShingles, "r", encoding='utf-8') as f:
         for line in f:
-            hashes[int(hashShingle(line, m))] = 1
-
-
-generateHash(txtshingles, m)
+            hashes[int(hashShingle(line, m, alphabet))] = 1
+    print("Hashes generated")

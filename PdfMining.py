@@ -8,17 +8,16 @@ import os
 import re
 
 
+# if executed more than 1 time delete files!!
 def rename_pdf():
-    answer = input("Do you want rename pdfs? [y][n] ")
+    answer = input("Do you want rename pdfs?(Do it just one time) [y][n] ")
+    print(" ")
     if answer == "y":
         i = 0
-        basepath = "./data/"
+        basepath = "./Document/"
         for fname in os.listdir(basepath):
             os.rename(os.path.join(basepath, fname), os.path.join(basepath, "Doc" + str(i) + ".pdf"))
             i += 1
-
-
-rename_pdf()  # if executed more than 1 time delete files!!
 
 
 def pdf_to_text(pdfname):
@@ -45,61 +44,64 @@ def pdf_to_text(pdfname):
     return text
 
 
-pdfname = "Doc0"  # number of document
-filename = "./Document/" + pdfname + ".pdf"
-# create a txt to tokenize
-txt = pdf_to_text(filename)
-txtname = "./txt/" + pdfname + ".txt"
-txtFile = open(txtname, "w", encoding='utf-8')
-txtFile.write(txt)
-text = []
-txtFile.close()
+def tokenizePdf(pdfname):
+    filename = "./Document/" + pdfname + ".pdf"
+    # create a txt to tokenize
+    txt = pdf_to_text(filename)
+    txtname = "./txt/" + pdfname + ".txt"
+    txtFile = open(txtname, "w", encoding='utf-8')
+    txtFile.write(txt)
+    text = []
+    txtFile.close()
 
-tokenName = "./txt/" + pdfname + "token.txt"  # txt that contains token
-tokenFile = open(tokenName, "w+", encoding='utf-8')
+    tokenName = "./txt/" + pdfname + "token.txt"  # txt that contains token
+    tokenFile = open(tokenName, "w+", encoding='utf-8')
 
-punctuations = ['(', ')', ';', ':', '[', ']', ',', '', '@', '{', '}']
-# stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
-stop_words = stopwords.words('english')
-numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-greekLetters = ['Α', 'α', 'Β', 'β', 'Γ', 'γ', 'Δ', 'δ', 'Ε', 'ε', 'Ζ', 'ζ', 'Η', 'η', 'Θ', 'θ', 'Ι', 'ι', 'Κ', 'κ', 'Λ',
-                'λ', 'Μ', 'μ'
-    , 'Ν', 'ν', 'Ξ', 'ξ', 'Ο', 'ο', 'Π', 'π', 'Ρ', 'ρ', 'Σ', 'σ', 'ς', 'Τ', 'τ', 'Υ', 'υ', 'Φ', 'φ', 'Χ', 'χ', 'Ψ', 'ψ',
-                'Ω', 'ω', '⎠', '|', '∈', '⎜']
-mathSymbols = ['exp', '^', '+', '-']
-with open(txtname, "r", encoding='utf-8') as f:
-    for line in f:
-        for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=|@|\||\{|\}', line):
-            if word not in punctuations and word not in stop_words:
-                notEndedWordFlag = False
-                numberFlag = False
-                mathFlag = False
-                if word.endswith('-'):
-                    notEndedWordFlag = True
-                for character in word:
-                    if character == '“' or character == '\u2018' or character == '\u2019' or character == 'ˆ':
-                        word = word.replace('“', '')
-                        word = word.replace('ˆ', '')
-                        word = word.replace('\u2018', '')
-                        word = word.replace('\u2019', '')
-                    elif character == '”':
-                        word = word.replace('”', '')
-                    elif character == 'ﬂ':
-                        word = word.replace('ﬂ', 'fl')
-                    elif character == 'ﬁ':
-                        word = word.replace('ﬁ', 'fi')
-                    elif character == '-' or character == '\u2014':
-                        word = word.replace('-', '')
-                        word = word.replace('\u2014', '')
-                    elif character in numbers:
-                        numberFlag = True
-                    elif character in greekLetters or character in mathSymbols:
-                        mathFlag = True
-                if len(word) > 2 and numberFlag is False and mathFlag is False:
-                    text.append(word)
-                    if notEndedWordFlag:
-                        tokenFile.write(word)
-                    else:
-                        tokenFile.write(word + " ")
-tokenFile.close()
-os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
+    punctuations = ['(', ')', ';', ':', '[', ']', ',', '', '@', '{', '}']
+    # stop_words = [word.encode('utf-8') for word in stopwords.words('english')]
+    stop_words = stopwords.words('english')
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    greekLetters = ['Α', 'α', 'Β', 'β', 'Γ', 'γ', 'Δ', 'δ', 'Ε', 'ε', 'Ζ', 'ζ', 'Η', 'η', 'Θ', 'θ', 'Ι', 'ι', 'Κ', 'κ',
+                    'Λ',
+                    'λ', 'Μ', 'μ'
+        , 'Ν', 'ν', 'Ξ', 'ξ', 'Ο', 'ο', 'Π', 'π', 'Ρ', 'ρ', 'Σ', 'σ', 'ς', 'Τ', 'τ', 'Υ', 'υ', 'Φ', 'φ', 'Χ', 'χ', 'Ψ',
+                    'ψ',
+                    'Ω', 'ω', '⎠', '|', '∈', '⎜']
+    mathSymbols = ['exp', '^', '+', '-']
+    with open(txtname, "r", encoding='utf-8') as f:
+        for line in f:
+            for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=|@|\||\{|\}', line):
+                if word not in punctuations and word not in stop_words:
+                    notEndedWordFlag = False
+                    numberFlag = False
+                    mathFlag = False
+                    if word.endswith('-'):
+                        notEndedWordFlag = True
+                    for character in word:
+                        if character == '“' or character == '\u2018' or character == '\u2019' or character == 'ˆ':
+                            word = word.replace('“', '')
+                            word = word.replace('ˆ', '')
+                            word = word.replace('\u2018', '')
+                            word = word.replace('\u2019', '')
+                        elif character == '”':
+                            word = word.replace('”', '')
+                        elif character == 'ﬂ':
+                            word = word.replace('ﬂ', 'fl')
+                        elif character == 'ﬁ':
+                            word = word.replace('ﬁ', 'fi')
+                        elif character == '-' or character == '\u2014':
+                            word = word.replace('-', '')
+                            word = word.replace('\u2014', '')
+                        elif character in numbers:
+                            numberFlag = True
+                        elif character in greekLetters or character in mathSymbols:
+                            mathFlag = True
+                    if len(word) > 2 and numberFlag is False and mathFlag is False:
+                        text.append(word)
+                        if notEndedWordFlag:
+                            tokenFile.write(word)
+                        else:
+                            tokenFile.write(word + " ")
+    tokenFile.close()
+    os.remove("./txt/" + pdfname + ".txt")  # erase the txt used to tokenize
+    print("Mining ended")

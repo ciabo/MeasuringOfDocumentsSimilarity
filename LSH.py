@@ -20,6 +20,7 @@ def LSH(minHashes, numberOfBands, numberOfDocuments, newHashDim):
         for i in range(0, len(checkCandidates)):
             if len(checkCandidates[i]) >= 2:
                 documentCandidates.append(checkCandidates[i])
+    print("LSH ended")
     return documentCandidates
 
 
