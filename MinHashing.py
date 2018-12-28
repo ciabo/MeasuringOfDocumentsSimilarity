@@ -11,7 +11,7 @@ def minHash(matrix,numberOfDocuments,shingleNumber,permutationNumber=100):
         hashedIndex=[]#hashedIndex is a vector that contains a permutation: hashedIndex[0]=3 means that the row 0 will be the row 3
         minHash=np.full((1, numberOfDocuments), np.inf) #vector with dimension equal to the number of documents
         for j in range(0,shingleNumber):
-            hashedIndex.append(j,primeNumber,shingleNumber)
+            hashedIndex.append(hash(j,primeNumber,shingleNumber))
             ones=matrix[j]
             for k in ones:
                 if hashedIndex[j]<minHash[k]:
