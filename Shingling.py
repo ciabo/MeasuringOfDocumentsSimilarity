@@ -5,7 +5,6 @@ def generateShingles(pdfname, txtdir):
 
     k = 10
     i = 0
-    shingles = []
 
     with open(txtname, "r", encoding='utf-8') as f:
         for line in f:
@@ -13,4 +12,4 @@ def generateShingles(pdfname, txtdir):
                 shinglesFile.write(line[i:k + 1] + "\n")
                 i += 1
                 k += 1
-    print("Shingles generated")
+
