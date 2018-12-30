@@ -1,5 +1,5 @@
 import math
-
+from SparseMatrix import SparseMatrix
 
 def hashShingle(line, m, alphabet):
     encode = 0
@@ -17,6 +17,6 @@ def generateHash(pdfname, txtdir, m, matrix, docnumber):
     with open(txtShingles, "r", encoding='utf-8') as f:
         for line in f:
             index = int(hashShingle(line, m, alphabet))
-            if docnumber not in matrix[index]:
-                matrix[index].append(docnumber)
+            matrix.addValueWithCheck(index,docnumber)
+
 

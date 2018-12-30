@@ -4,7 +4,9 @@ import math
 def LSH(minHashes, numberOfBands, numberOfDocuments):
     bandDim = len(minHashes) // numberOfBands  # For python 2 change // with /
     #newHashDim = int(math.pow(10,bandDim)) #10^bandDim
-    newHashDim = numberOfDocuments*numberOfBands*100 #total number of possible values * 100
+    newHashDim = numberOfDocuments*1000 # there are only numberOfDocuments bands in the same hash table so we multiply this value to be sure of no collisions
+    if newHashDim%2==0:
+        newHashDim+=1 #Here we try to avoid number that are power of 2 that can lead to problem in the hash table
     documentCandidates = []
     for i in range(0, numberOfBands):
         bandedMinHashes = []
