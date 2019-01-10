@@ -35,14 +35,15 @@ def main():
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)
     print(results)
-    print(time.time()-t0)
+    print(time.time() - t0)
     print(" ")
+
+    t1 = time.time()
     matr = SparseMatrix()
     docsimilar("./prova.pdf", "./OneDocSimilar/", matr, m, numFiles, numberOfPermutations, numberOfBands,
                "./minHashes/minHash.txt", "./minHashes/ab.txt")
+    print(time.time() - t1)
 
 
 if __name__ == '__main__':
     main()
-
-
