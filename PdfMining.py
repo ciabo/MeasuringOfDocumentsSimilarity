@@ -44,8 +44,8 @@ def pdf_to_text(pdfname):
     return text
 
 
-def tokenizePdf(pdfname, txtdir, pdfdir):
-    filename = "./"+pdfdir+"/" + pdfname + ".pdf"
+def tokenizePdf(pdfname, txtdir, pdfdir, singleDocument=False):
+    filename = pdfname if singleDocument else "./" + pdfdir + "/" + pdfname + ".pdf"
     # create a txt to tokenize
     txt = pdf_to_text(filename)
     txtname = "./" + txtdir + "/" + pdfname + ".txt"
@@ -104,4 +104,3 @@ def tokenizePdf(pdfname, txtdir, pdfdir):
                             tokenFile.write(word + " ")
     tokenFile.close()
     os.remove("./" + txtdir + "/" + pdfname + ".txt")  # erase the txt used to tokenize
-
