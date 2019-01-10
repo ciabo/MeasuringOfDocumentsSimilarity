@@ -7,30 +7,21 @@ from StringHashing import generateHash
 from SparseMatrix import SparseMatrix
 from Save import SaveMinHash
 from OneDocSimilar import docsimilar
+from ParseData import parsedata
 import time
 import os
 
 
 def main():
-    pdfdir = "Document"  # pdf directory
-    rename_pdf(pdfdir)
-    t0 = time.time()
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 25  # number of bands in LSH phase
     m = 1000003
-    path = './' + pdfdir + '/'
-    numFiles = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])  # minHash()
 
+    t0 = time.time()
     matrix = SparseMatrix()
-    txtdir = "txt"  # select txt directory
-    for i in range(0, numFiles):
-        tokenizePdf("Doc" + str(i), txtdir, pdfdir)
-        generateShingles("Doc" + str(i), txtdir)
-    print("Mining ended")
-    print("Shingles generated")
-    for i in range(0, numFiles):
-        generateHash("Doc" + str(i), txtdir, m, matrix, i)
-    print("Matrix of hashes generated")
+    numFiles = parsedata("data2017", "txtdata", matrix, 0, m)
+    numFiles = parsedata("data2018", "txtdata", matrix, numFiles, m, True)
+
     minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)
@@ -39,8 +30,8 @@ def main():
     print(" ")
 
     t1 = time.time()
-    matr = SparseMatrix()
-    docsimilar("./prova", "./OneDocSimilar/", matr, m, numFiles, numberOfPermutations, numberOfBands,
+    matrice = SparseMatrix()
+    docsimilar("./Doc4", "./OneDocSimilar/", matrice, m, numFiles, numberOfPermutations, numberOfBands,
                "./minHashes/minHash.txt", "./minHashes/ab.txt")
     print(time.time() - t1)
 

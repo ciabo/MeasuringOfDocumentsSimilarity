@@ -9,16 +9,16 @@ import re
 
 
 # if executed more than 1 time delete files!!
-def rename_pdf(pdfdir):
-    answer = input("Do you want rename pdfs?(Do it just one time) [y][n] ")
-    print(" ")
+def rename_pdf(pdfdir, startcount):
+    answer = input("Do you want rename pdfs' " + pdfdir + "?(Do it just one time) [y][n] ")
     if answer == "y":
-        i = 0
+        i = startcount
         basepath = "./" + pdfdir + "/"
         for fname in os.listdir(basepath):
             os.rename(os.path.join(basepath, fname), os.path.join(basepath, "Doc" + str(i) + ".pdf"))
             i += 1
-    print("pdf renaming complete")
+        print("pdf renaming complete")
+    print(" ")
 
 
 def pdf_to_text(pdfname):

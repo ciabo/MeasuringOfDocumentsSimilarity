@@ -32,14 +32,14 @@ def docsimilar(docName, docdir, matrix, m, docnumber, numberOfPermutations, numb
     minHashesCol = minHash(matrix, 1, m, ablist, numberOfPermutations, True)
     for i in range(0, len(minHashes)):
         minHashes[i].append(int(minHashesCol[i]))
-    results = LSH(minHashes, numberOfBands, docnumber+1)
-    toBeRemoved=[]
-    for i in range(0,len(results)):
-        ok=False
+    results = LSH(minHashes, numberOfBands, docnumber + 1)
+    toBeRemoved = []
+    for i in range(0, len(results)):
+        ok = False
         for element in results[i]:
-            if element==docnumber:
-                ok=True
-        if ok==False:
+            if element == docnumber:
+                ok = True
+        if ok is False:
             toBeRemoved.append(i)
     toBeRemoved.reverse()
     for i in toBeRemoved:
