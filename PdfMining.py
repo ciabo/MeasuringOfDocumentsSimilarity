@@ -20,6 +20,7 @@ def rename_pdf(pdfdir):
             i += 1
     print("pdf renaming complete")
 
+
 def pdf_to_text(pdfname):
     rsrcmgr = PDFResourceManager()  # used to handle interpreter and device
     output = StringIO()  # destination of interpreter processing
@@ -45,7 +46,7 @@ def pdf_to_text(pdfname):
 
 
 def tokenizePdf(pdfname, txtdir, pdfdir, singleDocument=False):
-    filename = pdfname if singleDocument else "./" + pdfdir + "/" + pdfname + ".pdf"
+    filename = pdfname + ".pdf" if singleDocument else "./" + pdfdir + "/" + pdfname + ".pdf"
     # create a txt to tokenize
     txt = pdf_to_text(filename)
     txtname = "./" + txtdir + "/" + pdfname + ".txt"
