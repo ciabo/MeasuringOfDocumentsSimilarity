@@ -7,13 +7,14 @@ from StringHashing import generateHash
 from SparseMatrix import SparseMatrix
 from Save import SaveMinHash
 from OneDocSimilar import docsimilar
+import time
 import os
 
 
 def main():
     pdfdir = "Document"  # pdf directory
     rename_pdf(pdfdir)
-
+    t0 = time.time()
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 25  # number of bands in LSH phase
     m = 1000003
@@ -33,7 +34,7 @@ def main():
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)
     print(results)
-
+    print(time.time()-t0)
     matr = SparseMatrix()
     docsimilar("./prova.pdf", "./OneDocSimilar/", matr, m, numFiles, numberOfPermutations, numberOfBands,
                "./minHashes/minHash.txt", "./minHashes/ab.txt")
@@ -41,3 +42,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
