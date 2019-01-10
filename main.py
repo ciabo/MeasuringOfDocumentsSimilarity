@@ -1,17 +1,13 @@
-from PdfMining import rename_pdf
-from PdfMining import tokenizePdf
 from LSH import LSH
-from Shingling import generateShingles
 from MinHashing import minHash
-from StringHashing import generateHash
 from SparseMatrix import SparseMatrix
 from Save import SaveMinHash
 from OneDocSimilar import docsimilar
 from ParseData import parsedata
 import time
-import os
 
-def cleanResults(results,n):
+
+def cleanResults(results, n):
     toBeRemoved = []
     for i in range(0, len(results)):
         ok1 = False
@@ -21,7 +17,7 @@ def cleanResults(results,n):
                 ok1 = True
             if element >= n:
                 ok2 = True
-        if ok1 == False or ok2 == False:
+        if ok1 is False or ok2 is False:
             toBeRemoved.append(i)
     toBeRemoved.reverse()
     for i in toBeRemoved:
@@ -37,25 +33,23 @@ def main():
     t0 = time.time()
     matrix = SparseMatrix()
     numFiles = parsedata("data2017", "txtdata", matrix, 0, m, False)
-    n=numFiles
+    n = numFiles
     numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, False)
-    print(numFiles)
     minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)
     print(results)
-    results = cleanResults(results,n)
+    results = cleanResults(results, n)
     print(results)
     print(time.time() - t0)
     print(" ")
 
     t1 = time.time()
     matrice = SparseMatrix()
-    docsimilar("./Doc4", "./OneDocSimilar/", matrice, m, numFiles, numberOfPermutations, numberOfBands,
+    docsimilar("./DocTest", "./OneDocSimilar/", matrice, m, numFiles, numberOfPermutations, numberOfBands,
                "./minHashes/minHash.txt", "./minHashes/ab.txt")
     print(time.time() - t1)
 
 
 if __name__ == '__main__':
     main()
-
