@@ -18,7 +18,7 @@ def rename_pdf(pdfdir):
         for fname in os.listdir(basepath):
             os.rename(os.path.join(basepath, fname), os.path.join(basepath, "Doc" + str(i) + ".pdf"))
             i += 1
-
+    print("pdf renaming complete")
 
 def pdf_to_text(pdfname):
     rsrcmgr = PDFResourceManager()  # used to handle interpreter and device
