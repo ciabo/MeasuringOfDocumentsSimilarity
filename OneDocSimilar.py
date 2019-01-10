@@ -32,5 +32,5 @@ def docsimilar(docName, docdir, matrix, m, docnumber, numberOfPermutations, numb
     minHashesCol = minHash(matrix, 1, m, ablist, numberOfPermutations, True)
     for i in range(0, len(minHashes)):
         minHashes[i].append(int(minHashesCol[i]))
-    results = LSH(minHashes, numberOfBands, 1)
+    results = LSH(minHashes, numberOfBands, docnumber+1)
     print(results)

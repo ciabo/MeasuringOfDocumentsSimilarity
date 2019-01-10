@@ -21,7 +21,7 @@ def main():
     path = './' + pdfdir + '/'
     numFiles = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])  # minHash()
 
-    '''matrix = SparseMatrix()
+    matrix = SparseMatrix()
     txtdir = "txt"  # select txt directory
     for i in range(0, numFiles):
         tokenizePdf("Doc" + str(i), txtdir, pdfdir)
@@ -36,7 +36,7 @@ def main():
     results = LSH(minHashes, numberOfBands, numFiles)
     print(results)
     print(time.time()-t0)
-    print(" ")'''
+    print(" ")
     matr = SparseMatrix()
     docsimilar("./prova.pdf", "./OneDocSimilar/", matr, m, numFiles, numberOfPermutations, numberOfBands,
                "./minHashes/minHash.txt", "./minHashes/ab.txt")
