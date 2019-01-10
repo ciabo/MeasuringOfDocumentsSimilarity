@@ -20,11 +20,27 @@ def main():
     t0 = time.time()
     matrix = SparseMatrix()
     numFiles = parsedata("data2017", "txtdata", matrix, 0, m)
+    n=numFiles
     numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m)
     print(numFiles)
     minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)
+    toBeRemoved = []
+    for i in range(0, len(results)):
+        ok1 = False
+        ok2 = False
+        for element in results[i]:
+            if element < n:
+                ok1 = True
+            if element >= n:
+                ok2 = True
+        if ok1 == False or ok2 == False:
+            toBeRemoved.append(i)
+    toBeRemoved.reverse()
+    for i in toBeRemoved:
+        results.pop(i)
+    print(results)
     print(results)
     print(time.time() - t0)
     print(" ")
