@@ -18,10 +18,11 @@ def main():
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 25  # number of bands in LSH phase
     m = 1000003
-    matrix = SparseMatrix()
-    txtdir = "txt"  # select txt directory
     path = './' + pdfdir + '/'
     numFiles = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])  # minHash()
+
+    '''matrix = SparseMatrix()
+    txtdir = "txt"  # select txt directory
     for i in range(0, numFiles):
         tokenizePdf("Doc" + str(i), txtdir, pdfdir)
         generateShingles("Doc" + str(i), txtdir)
@@ -35,8 +36,8 @@ def main():
     results = LSH(minHashes, numberOfBands, numFiles)
     print(results)
     print(time.time()-t0)
+    print(" ")'''
     matr = SparseMatrix()
-    print(" ")
     docsimilar("./prova.pdf", "./OneDocSimilar/", matr, m, numFiles, numberOfPermutations, numberOfBands,
                "./minHashes/minHash.txt", "./minHashes/ab.txt")
 
