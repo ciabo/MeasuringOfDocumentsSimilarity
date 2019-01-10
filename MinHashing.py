@@ -29,10 +29,14 @@ def minHash(matrix, numberOfDocuments, shingleNumber, ab=None, permutationNumber
             # ones = matrix[j]  # signature
             ones = matrix.getColumns(key)
             hashedIndex = hash(key, primeNumber, shingleNumber, a, b)
-            for k in ones:
-                if hashedIndex < minHash[k]:
-                    minHash[k] = hashedIndex  # minHash contain the value of the row corresponding to the one
-        minHashes.append(minHash)  # minHashes contain all the minhash
+            if singleDocument is False:
+                for k in ones:
+                    if hashedIndex < minHash[k]:
+                        minHash[k] = hashedIndex  # minHash contain the value of the row corresponding to the one
+            else:
+                if hashedIndex < minHash[0]:
+                    minHash[0] = hashedIndex
+        minHashes.append(minHash[0] if singleDocument else minHash)  # minHashes contain all the minhash
     if singleDocument is False:
         Saveab(ablist)
     print("MinHashing ultimated")

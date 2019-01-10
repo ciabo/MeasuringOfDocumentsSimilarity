@@ -36,6 +36,7 @@ def main():
     print(results)
     print(time.time()-t0)
     matr = SparseMatrix()
+    print(" ")
     docsimilar("./prova.pdf", "./OneDocSimilar/", matr, m, numFiles, numberOfPermutations, numberOfBands,
                "./minHashes/minHash.txt", "./minHashes/ab.txt")
 
