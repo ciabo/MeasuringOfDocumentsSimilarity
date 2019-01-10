@@ -22,18 +22,18 @@ def main():
     txtdir = "txt"  # select txt directory
     path = './' + pdfdir + '/'
     numFiles = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])  # minHash()
-    for i in range(0, numFiles):
-        tokenizePdf("Doc" + str(i), txtdir, pdfdir)
-        generateShingles("Doc" + str(i), txtdir)
+    #for i in range(0, numFiles):
+    #    tokenizePdf("Doc" + str(i), txtdir, pdfdir)
+    #    generateShingles("Doc" + str(i), txtdir)
     print("Mining ended")
     print("Shingles generated")
-    for i in range(0, numFiles):
-        generateHash("Doc" + str(i), txtdir, m, matrix, i)
+    #for i in range(0, numFiles):
+    #    generateHash("Doc" + str(i), txtdir, m, matrix, i)
     print("Matrix of hashes generated")
-    minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
-    SaveMinHash(minHashes)
-    results = LSH(minHashes, numberOfBands, numFiles)
-    print(results)
+    #minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
+    #SaveMinHash(minHashes)
+    #results = LSH(minHashes, numberOfBands, numFiles)
+    #print(results)
     print(time.time()-t0)
     matr = SparseMatrix()
     docsimilar("./prova.pdf", "./OneDocSimilar/", matr, m, numFiles, numberOfPermutations, numberOfBands,
