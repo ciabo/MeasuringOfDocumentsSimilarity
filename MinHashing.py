@@ -1,7 +1,7 @@
 from random import randint
 import numpy as np
 from SparseMatrix import SparseMatrix
-
+from Save import *
 primeNumber = 10000013  # this must be greater than the number of shingles(dieci milioni e 13)
 
 
@@ -9,14 +9,21 @@ primeNumber = 10000013  # this must be greater than the number of shingles(dieci
 # every element is an array that contains the column index
 # of an element with value 1 in the sparse matrix
 
-def minHash(matrix, numberOfDocuments, shingleNumber, permutationNumber=100):
+def minHash(matrix, numberOfDocuments, shingleNumber ,ab=None , permutationNumber=100, singleDocument=False ):
     minHashes = []
+    ablist=[]
     keys=matrix.getKeys()
     for i in range(0, permutationNumber):
         print("permutation number "+str(i)+"...")
         minHash = np.full(numberOfDocuments, np.inf)  # vector with dimension equal to the number of documents
-        a = randint(0, 100)
-        b = randint(0, 100)
+        if(singleDocument==True):
+            a=ab[permutationNumber][0]
+            b=ab[permutationNumber][1]
+        else:
+            a = randint(0, 100)
+            b = randint(0, 100)
+            e=[a,b]
+            ablist.append(e)
         for key in keys:
             #ones = matrix[j]  # signature
             ones=matrix.getColumns(key)
@@ -25,6 +32,8 @@ def minHash(matrix, numberOfDocuments, shingleNumber, permutationNumber=100):
                 if hashedIndex < minHash[k]:
                     minHash[k] = hashedIndex  # minHash contain the value of the row corresponding to the one
         minHashes.append(minHash)  # minHashes contain all the minhash
+    if(singleDocument==False):
+        Saveab(ablist)
     print("MinHashing ultimated")
     return minHashes
 
