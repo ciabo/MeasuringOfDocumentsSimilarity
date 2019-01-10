@@ -20,8 +20,8 @@ def main():
     t0 = time.time()
     matrix = SparseMatrix()
     numFiles = parsedata("data2017", "txtdata", matrix, 0, m)
-    numFiles = parsedata("data2018", "txtdata", matrix, numFiles, m, True)
-
+    numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m)
+    print(numFiles)
     minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)

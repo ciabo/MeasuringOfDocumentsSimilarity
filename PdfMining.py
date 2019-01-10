@@ -10,7 +10,7 @@ import re
 
 # if executed more than 1 time delete files!!
 def rename_pdf(pdfdir, startcount):
-    answer = input("Do you want rename pdfs' " + pdfdir + "?(Do it just one time) [y][n] ")
+    answer = input("Do you want rename " + pdfdir + " 's pdfs?(Do it just one time) [y][n] ")
     if answer == "y":
         i = startcount
         basepath = "./" + pdfdir + "/"
