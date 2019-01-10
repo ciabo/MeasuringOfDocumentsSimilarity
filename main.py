@@ -19,13 +19,29 @@ def main():
 
     t0 = time.time()
     matrix = SparseMatrix()
-    numFiles = parsedata("data2017", "txtdata", matrix, 0, m)
+    numFiles = parsedata("data2017", "txtdata", matrix, 0, m, True)
     n=numFiles
-    numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m)
+    numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, True)
     print(numFiles)
     minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)
+    results = cleanResults(results,n)
+    print(results)
+    print(time.time() - t0)
+    print(" ")
+
+    t1 = time.time()
+    matrice = SparseMatrix()
+    docsimilar("./Doc4", "./OneDocSimilar/", matrice, m, numFiles, numberOfPermutations, numberOfBands,
+               "./minHashes/minHash.txt", "./minHashes/ab.txt")
+    print(time.time() - t1)
+
+
+if __name__ == '__main__':
+    main()
+
+def cleanResults(results,n):
     toBeRemoved = []
     for i in range(0, len(results)):
         ok1 = False
@@ -40,17 +56,4 @@ def main():
     toBeRemoved.reverse()
     for i in toBeRemoved:
         results.pop(i)
-    print(results)
-    print(results)
-    print(time.time() - t0)
-    print(" ")
-
-    t1 = time.time()
-    matrice = SparseMatrix()
-    docsimilar("./Doc4", "./OneDocSimilar/", matrice, m, numFiles, numberOfPermutations, numberOfBands,
-               "./minHashes/minHash.txt", "./minHashes/ab.txt")
-    print(time.time() - t1)
-
-
-if __name__ == '__main__':
-    main()
+    return results
