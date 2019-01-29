@@ -40,17 +40,17 @@ def main():
     doTokenShingle = False
     if createMinHashDatabaseMatrix:
         matrix = SparseMatrix()
-        if (compareBlocksOfDocs):
+        if compareBlocksOfDocs:
             numFiles = parsedata("data2017", "txtdata", matrix, 0, m, doTokenShingle)
             n = numFiles
             numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, doTokenShingle)
         else:
             numFiles = parsedata("Document", "txt", matrix, 0, m, doTokenShingle)
-        minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
+        minHashes = minHash(matrix, numFiles, m, None, numberOfPermutations)
         SaveMinHash(minHashes)
         results = LSH(minHashes, numberOfBands, numFiles)
         print(results)
-        if (compareBlocksOfDocs):
+        if compareBlocksOfDocs:
             results = cleanResults(results, n)
         print(results)
 
