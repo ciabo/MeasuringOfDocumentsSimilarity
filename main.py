@@ -17,7 +17,7 @@ def cleanResults(results, n):
                 ok1 = True
             if element >= n:
                 ok2 = True
-        if ok1 is False or ok2 is False:
+        if ok1 == False or ok2 == False:
             toBeRemoved.append(i)
     toBeRemoved.reverse()
     for i in toBeRemoved:
@@ -26,16 +26,16 @@ def cleanResults(results, n):
 
 
 def main():
-    numberOfPermutations = 100  # number of permutation in the minHashing phase
+    numberOfPermutations = 50  # number of permutation in the minHashing phase
     numberOfBands = 20  # number of bands in LSH phase
-    m = 1000003
+    m = 10003
 
     t0 = time.time()
     matrix = SparseMatrix()
     numFiles = parsedata("data2017", "txtdata", matrix, 0, m, False)
     n = numFiles
     numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, False)
-    minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
+    minHashes = minHash(matrix, numFiles, m, None, numberOfPermutations)
     SaveMinHash(minHashes)
     results = LSH(minHashes, numberOfBands, numFiles)
     print(results)
