@@ -9,7 +9,7 @@ class SparseMatrix:
             list = [columnIndex]
             self.matrix[rowIndex] = list
 
-    def addValueWithCheck(self, rowIndex, columnIndex):  # add the columnIndex only of it is not already present in the list
+    def addValueWithCheck(self, rowIndex, columnIndex):  # add the columnIndex only if it is not already present in the list
         if rowIndex in self.matrix:
             if columnIndex not in self.matrix[rowIndex]:  # check if the columnIndex is not already in the list...
                 self.matrix[rowIndex].append(columnIndex)

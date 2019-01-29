@@ -5,7 +5,7 @@ from MinHashing import minHash
 from LSH import LSH
 
 
-def docsimilar(docName, docdir, matrix, m, docnumber, numberOfPermutations, numberOfBands, minHashesFile,
+def docsimilar(docName, docdir, matrix, m, numberOfPermutations, numberOfBands, minHashesFile,
                abfile):
     minHashes = []
     with open(minHashesFile, "r", encoding='utf-8') as f:
@@ -15,6 +15,7 @@ def docsimilar(docName, docdir, matrix, m, docnumber, numberOfPermutations, numb
                 if el != "\n":
                     l.append(int(el))
             minHashes.append(l)
+    docnumber=len(minHashes[0])
     ablist = []
     with open(abfile, "r", encoding='utf-8') as f:
         for line in f:
@@ -27,9 +28,11 @@ def docsimilar(docName, docdir, matrix, m, docnumber, numberOfPermutations, numb
     generateShingles(docName, docdir)
     print("Mining ended")
     print("Shingles generated")
+
     generateHash(docName, docdir, m, matrix, docnumber)
     print("Matrix of hashes generated")
     minHashesCol = minHash(matrix, 1, m, ablist, numberOfPermutations, True)
+
     for i in range(0, len(minHashes)):
         minHashes[i].append(int(minHashesCol[i]))
     results = LSH(minHashes, numberOfBands, docnumber + 1)
