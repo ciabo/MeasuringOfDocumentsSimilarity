@@ -49,12 +49,12 @@ def cleanResults(results,n):
 
 
 def main():
-    numberOfPermutations = 50  # number of permutation in the minHashing phase
-    numberOfBands = 25  # number of bands in LSH phase
+    numberOfPermutations = 100  # number of permutation in the minHashing phase
+    numberOfBands = 20  # number of bands in LSH phase
     m = 1000003
     createMinHashDatabaseMatrix=True
-    compareBlocksOfDocs=True
-    searchOneDocumentSimilarDocs=False #if a minHash matrix has been already created
+    compareBlocksOfDocs=False
+    searchOneDocumentSimilarDocs=True #if a minHash matrix has been already created
     doTokenShingle=False
     if(createMinHashDatabaseMatrix):
         matrix = SparseMatrix()
