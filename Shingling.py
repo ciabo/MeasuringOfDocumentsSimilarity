@@ -1,4 +1,5 @@
 def generateShingles(pdfname, txtdir):
+    print("Shingles generation started")
     txtname = "./" + txtdir + "/" + pdfname + "token.txt"
     txtshingles = "./" + txtdir + "/" + pdfname + "Shingle.txt"
     shinglesFile = open(txtshingles, "w+", encoding='utf-8')
@@ -12,4 +13,4 @@ def generateShingles(pdfname, txtdir):
                 shinglesFile.write(line[i:k + 1] + "\n")
                 i += 1
                 k += 1
-
+    print("Shingles  generated")
