@@ -2,6 +2,17 @@ import random
 
 
 def test(docdir, documentToChange, numFiles, similarity):
+
+    # documents information retrieval
+    docsinfo = {}
+    with open("./StoredData/docsinfo.txt", "r", encoding='utf-8') as f:
+        for line in f:
+            row = []
+            for word in line.split(','):
+                row.append(int(word.replace("\n", "")))
+            docsinfo[row[0]] = [row[1], row[2]]
+
+    # loop to change predefined number of document(documentToChange)
     for i in range(0, documentToChange - 1):
         editdoc = random.randint(0, numFiles - 1)
         docToEdit = []
@@ -10,18 +21,9 @@ def test(docdir, documentToChange, numFiles, similarity):
                 for word in line.split(" "):
                     docToEdit.append(word)
 
-        # documents information retrieval
-        docsinfo = {}
-        with open("./StoredData/docsinfo.txt", "r", encoding='utf-8') as f:
-            for line in f:
-                row = []
-                for word in line.split(','):
-                    row.append(int(word.replace("\n", "")))
-                docsinfo[row[0]] = [row[1], row[2]]
-
         numberOfToken = docsinfo[editdoc][0] / float(docsinfo[editdoc][1])  # token per row of the document
 
-        # test for each document's rows
+        # probably swap for each document's rows
         for j in range(0, docsinfo[editdoc][1]):
             prob = random.randint(0, 100)  # probability to swap rows with another pdf
             if prob >= similarity:
