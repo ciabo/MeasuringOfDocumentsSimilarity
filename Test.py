@@ -1,19 +1,14 @@
 import random
-import math
-from shutil import copyfile
 
 
 def test(docdir, documentToChange, numFiles, similarity):
     for i in range(0, documentToChange - 1):
         editdoc = random.randint(0, numFiles - 1)
         docToEdit = []
-        with open("./txt/Doc" + str(editdoc) + "token.txt", "r", encoding='utf-8') as f:
+        with open("./" + docdir + "/Doc" + str(editdoc) + "token.txt", "r", encoding='utf-8') as f:
             for line in f:
                 for word in line.split(" "):
                     docToEdit.append(word)
-        # copyfile("./" + docdir + "/Doc" + str(editdoc) + "token.txt",
-        #         "./Test/Doc" + str(editdoc) + "-" + str(similarity) + "token.txt")
-        print(editdoc)
 
         # documents information retrieval
         docsinfo = {}
@@ -24,19 +19,33 @@ def test(docdir, documentToChange, numFiles, similarity):
                     row.append(int(word.replace("\n", "")))
                 docsinfo[row[0]] = [row[1], row[2]]
 
-        numberOfToken = math.ceil(docsinfo[editdoc][0] / float(docsinfo[editdoc][1]))
+        numberOfToken = docsinfo[editdoc][0] / float(docsinfo[editdoc][1])  # token per row of the document
 
         # test for each document's rows
-        for j in range(docsinfo[editdoc][1]):
+        for j in range(0, docsinfo[editdoc][1]):
             prob = random.randint(0, 100)  # probability to swap rows with another pdf
             if prob >= similarity:
-                swapdoc = random.randint(0, numFiles - 1)
+                swapdoc = random.randint(0, numFiles - 1)  # document random choosed
                 while swapdoc == editdoc:  # check if the document is the same
                     swapdoc = random.randint(0, numFiles - 1)
-                rowToSwap = random.randint(0, docsinfo[swapdoc][1])
+                rowToSwap = random.randint(0, docsinfo[swapdoc][1])  # row random choosed in random doc
+
+                # retrieve list of tokens
                 docToSwap = []
-                with open("./txt/Doc" + str(swapdoc) + "token.txt", "r", encoding='utf-8') as f:
+                with open("./" + docdir + "/Doc" + str(swapdoc) + "token.txt", "r", encoding='utf-8') as f:
                     for line in f:
                         for word in line.split(" "):
                             docToSwap.append(word)
-                print(docToSwap)
+
+                # token swap
+                numberOfTokenSW = docsinfo[swapdoc][0] / float(
+                    docsinfo[swapdoc][1])  # token per row of the random document
+                for token, swtoken in zip(range(int(j * numberOfToken), int(j * numberOfToken + numberOfToken)),
+                                          range(int(rowToSwap * numberOfTokenSW),
+                                                int(rowToSwap * numberOfTokenSW + numberOfToken))):
+                    docToEdit[token] = docToSwap[swtoken]
+
+        # save new token in another file
+        with open("./Test/Doc" + str(editdoc) + "-" + str(similarity) + "token.txt", "w+", encoding="utf-8") as f:
+            for token in docToEdit:
+                f.write(token + " ")
