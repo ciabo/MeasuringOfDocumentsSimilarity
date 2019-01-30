@@ -45,7 +45,9 @@ def pdf_to_text(pdfname):
     return text
 
 
-def tokenizePdf(pdfname, txtdir, pdfdir, singleDocument=False):
+def tokenizePdf(pdfname, txtdir, pdfdir, docsinfo, singleDocument=False):
+    rownumber = 0
+    tokennumber = 0
     filename = pdfname + ".pdf" if singleDocument else "./" + pdfdir + "/" + pdfname + ".pdf"
     # create a txt to tokenize
     txt = pdf_to_text(filename)
@@ -71,6 +73,7 @@ def tokenizePdf(pdfname, txtdir, pdfdir, singleDocument=False):
     mathSymbols = ['exp', '^', '+', '-']
     with open(txtname, "r", encoding='utf-8') as f:
         for line in f:
+            rownumber += 1
             for word in re.split(r',|\.|;|:|\s|\(|\)|\[|\]|\"|<|>|=|@|\||\{|\}', line):
                 if word not in punctuations and word not in stop_words:
                     notEndedWordFlag = False
@@ -103,5 +106,7 @@ def tokenizePdf(pdfname, txtdir, pdfdir, singleDocument=False):
                             tokenFile.write(word)
                         else:
                             tokenFile.write(word + " ")
+                            tokennumber += 1
+    docsinfo[pdfname[len(pdfname) - 1:]] = [tokennumber, rownumber]  # fill the dictionary with the infos of document
     tokenFile.close()
     os.remove("./" + txtdir + "/" + pdfname + ".txt")  # erase the txt used to tokenize
