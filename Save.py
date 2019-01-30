@@ -5,7 +5,7 @@ def SaveMinHash(minHash):
             for element in list:
                 f.write(str(int(element)) + ",")
             f.write("\n")
-    print("minHash saved")
+
 
 
 def Saveab(ablist):
@@ -13,4 +13,4 @@ def Saveab(ablist):
     with open(txtname, "w+", encoding='utf-8') as f:
         for element in ablist:
             f.write(str(element[0]) + "," + str(element[1]) + "\n")
-    print("ab saved")
+

@@ -11,6 +11,7 @@ primeNumber = 10000013  # this must be greater than the number of shingles(dieci
 # of an element with value 1 in the sparse matrix
 
 def minHash(matrix, numberOfDocuments, shingleNumber, ab=None, permutationNumber=100, singleDocument=False):
+    print("MinHashing started")
     minHashes = []
     ablist = []
     keys = matrix.getKeys()
@@ -39,7 +40,7 @@ def minHash(matrix, numberOfDocuments, shingleNumber, ab=None, permutationNumber
         minHashes.append(minHash[0] if singleDocument else minHash)  # minHashes contain all the minhash
     if singleDocument is False:
         Saveab(ablist)
-    print("MinHashing ultimated")
+    print("MinHashing ended")
     return minHashes
 
 

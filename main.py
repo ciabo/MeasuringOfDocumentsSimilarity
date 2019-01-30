@@ -26,16 +26,35 @@ def cleanResults(results,n):
     toBeRemoved.reverse()
     for i in toBeRemoved:
         results.pop(i)
-    return results
+    newList=[]
+    for i in range(0, len(results)):
+        if len(results[i])>2:
+            j=0
+            target=0
+            while  results[i][j] < n and j < len(results[i]) :
+                k=len(results[i])-1
+                while results[i][k] >= n:
+                    newItem = [results[i][j], results[i][k]]
+                    newList.append(newItem)
+                    k=k-1
+                j=j+1
+    toBeRemoved = []
+    for i in range(0, len(results)):
+        if len(results[i])>2:
+            toBeRemoved.append(i)
+    toBeRemoved.reverse()
+    for i in toBeRemoved:
+        results.pop(i)
+    return results+newList
 
 
 def main():
-    numberOfPermutations = 100  # number of permutation in the minHashing phase
-    numberOfBands = 20  # number of bands in LSH phase
+    numberOfPermutations = 50  # number of permutation in the minHashing phase
+    numberOfBands = 25  # number of bands in LSH phase
     m = 1000003
-    createMinHashDatabaseMatrix=False
-    compareBlocksOfDocs=False
-    searchOneDocumentSimilarDocs=True #if a minHash matrix has been already created
+    createMinHashDatabaseMatrix=True
+    compareBlocksOfDocs=True
+    searchOneDocumentSimilarDocs=False #if a minHash matrix has been already created
     doTokenShingle=False
     if(createMinHashDatabaseMatrix):
         matrix = SparseMatrix()
@@ -45,7 +64,7 @@ def main():
             numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, doTokenShingle)
         else:
             numFiles = parsedata("Document", "txt", matrix, 0, m, doTokenShingle)
-        minHashes = minHash(matrix, numFiles, m, numberOfPermutations)
+        minHashes = minHash(matrix, numFiles, m, None, numberOfPermutations)
         SaveMinHash(minHashes)
         results = LSH(minHashes, numberOfBands, numFiles)
         print(results)

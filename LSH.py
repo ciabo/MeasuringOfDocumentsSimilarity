@@ -3,6 +3,7 @@ import math
 
 # --------FEATURE: se ci sono 7righe nei minhash e divido per 3 mi da 2 bande da 3 e schianta perchè la terza banda è da 1
 def LSH(minHashes, numberOfBands, numberOfDocuments):
+    print("LSH started")
     bandDim = len(minHashes) // numberOfBands  # For python 2 change // with /
     # newHashDim = int(math.pow(10,bandDim)) #10^bandDim
     newHashDim = numberOfDocuments * 1000  # there are only numberOfDocuments bands in the same hash table so we multiply this value to be sure of no collisions

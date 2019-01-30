@@ -47,4 +47,5 @@ def docsimilar(docName, docdir, matrix, m, numberOfPermutations, numberOfBands, 
     toBeRemoved.reverse()
     for i in toBeRemoved:
         results.pop(i)
+    
     print(results)
