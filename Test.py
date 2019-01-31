@@ -5,7 +5,7 @@ from OneDocSimilar import docsimilar
 
 def executeTests(numberOfPermutations, numberOfBands, m):
     extest = True
-    numFiles = 40
+    numFiles = 393
     similarities = [80, 60, 50, 40, 20]
     numberOfTests = 50
     testResultsList = {80: 0, 60: 0, 50: 0, 40: 0, 20: 0}
@@ -19,7 +19,8 @@ def executeTests(numberOfPermutations, numberOfBands, m):
             res = docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
                              "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
             # check if the results from docsimilar is not empty and if in the list there is at least an elemente = editdoc
-            if res:
+            a=1
+            if len(res)!=0:
                 ok = False
                 z = 0
                 while ok is False and z < len(res):

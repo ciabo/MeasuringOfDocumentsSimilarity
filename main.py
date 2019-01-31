@@ -57,10 +57,10 @@ def main():
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 20  # number of bands in LSH phase
     m = 1000003
-    createMinHashDatabaseMatrix = True
+    createMinHashDatabaseMatrix = False
     compareBlocksOfDocs = False
     searchOneDocumentSimilarDocs = False  # if a minHash matrix has been already created
-    doTokenShingle = True
+    doTokenShingle = False
     extest = True
     if createMinHashDatabaseMatrix:
         matrix = SparseMatrix()
@@ -71,7 +71,7 @@ def main():
             numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, docsinfo, doTokenShingle)
             storeinformation(docsinfo)  # always after parsedata
         else:
-            numFiles = parsedata("Document", "txtdata", matrix, 0, m, docsinfo, doTokenShingle)
+            numFiles = parsedata("Document", "txt", matrix, 0, m, docsinfo, doTokenShingle)
             storeinformation(docsinfo)  # always after parsedata
         minHashes = minHash(matrix, numFiles, m, None, numberOfPermutations)
         SaveMinHash(minHashes)
