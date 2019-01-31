@@ -1,6 +1,7 @@
 import random
 from SparseMatrix import SparseMatrix
 from OneDocSimilar import docsimilar
+import math
 
 
 def executeTests(numberOfPermutations, numberOfBands, m, txtdir):
@@ -27,7 +28,7 @@ def executeTests(numberOfPermutations, numberOfBands, m, txtdir):
             matrice = SparseMatrix()
             res = docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
                              "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
-            # check if the results from docsimilar is not empty and if in the list there is at least an elemente = editdoc
+            # check if the results from docsimilar is not empty and if in the list there is at least an elemente=editdoc
             if res:
                 ok = False
                 z = 0
@@ -35,17 +36,18 @@ def executeTests(numberOfPermutations, numberOfBands, m, txtdir):
                     for el in res[z]:
                         if el == editdoc:
                             ok = True
+                    z += 1
                 if ok:
                     testResultsList[similarity] = testResultsList[similarity] + 1
             print("End " + str(similarity) + "% similarity of Doc" + str(editdoc))
             print(" ")
-    print("Test results with " + numberOfBands + " bands and " + numberOfPermutations + "permutations: \n")
+    print("Number of Test: " + str(numberOfTests))
+    print("Test results with " + str(numberOfBands) + " bands and " + str(numberOfPermutations) + " permutations: \n")
     print(testResultsList)
     print(" ")
 
 
 def test(editdoc, docdir, numFiles, similarity, docsinfo):
-
     docToEdit = []
     with open("./" + docdir + "/Doc" + str(editdoc) + "token.txt", "r", encoding='utf-8') as f:
         for line in f:
@@ -62,7 +64,9 @@ def test(editdoc, docdir, numFiles, similarity, docsinfo):
             swapdoc = random.randint(0, numFiles - 1)  # document random choosed
             while swapdoc == editdoc:  # check if the document is the same
                 swapdoc = random.randint(0, numFiles - 1)
-            rowToSwap = random.randint(0, docsinfo[swapdoc][1] - 1)  # row random choosed in random doc
+            # row random choosed in random doc
+            numberOfTokenSW = docsinfo[swapdoc][0] / float(docsinfo[swapdoc][1])  # token per row of the random document
+            rowToSwap = random.randint(0, docsinfo[swapdoc][1] - math.ceil(max(numberOfToken, numberOfTokenSW)))
 
             # retrieve list of tokens
             docToSwap = []
@@ -73,7 +77,6 @@ def test(editdoc, docdir, numFiles, similarity, docsinfo):
             docToSwap.pop()  # remove the space at the end
 
             # token swap
-            numberOfTokenSW = docsinfo[swapdoc][0] / float(docsinfo[swapdoc][1])  # token per row of the random document
             for token, swtoken in zip(range(int(j * numberOfToken), int(j * numberOfToken + numberOfToken)),
                                       range(int(rowToSwap * numberOfTokenSW),
                                             int(rowToSwap * numberOfTokenSW + numberOfToken))):
