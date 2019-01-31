@@ -5,7 +5,7 @@ from OneDocSimilar import docsimilar
 
 def executeTests(numberOfPermutations, numberOfBands, m):
     extest = True
-    numFiles = 6
+    numFiles = 392
     similarities = [75, 50, 25]
 
     editdoc = random.randint(0, numFiles - 1)

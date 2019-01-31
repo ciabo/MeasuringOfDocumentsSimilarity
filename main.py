@@ -1,15 +1,10 @@
-from PdfMining import rename_pdf
-from PdfMining import tokenizePdf
 from LSH import LSH
-from Shingling import generateShingles
 from MinHashing import minHash
-from StringHashing import generateHash
 from SparseMatrix import SparseMatrix
 from Save import SaveMinHash
 from OneDocSimilar import docsimilar
 from ParseData import parsedata
-from Test import test, executeTests
-import os
+from Test import executeTests
 
 
 def cleanResults(results, n):
@@ -53,11 +48,11 @@ def main():
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 20  # number of bands in LSH phase
     m = 1000003
-    createMinHashDatabaseMatrix = False
-    compareBlocksOfDocs = False
+    createMinHashDatabaseMatrix = True
+    compareBlocksOfDocs = True
     searchOneDocumentSimilarDocs = False  # if a minHash matrix has been already created
     doTokenShingle = True
-    extest=True
+    extest = True
     if createMinHashDatabaseMatrix:
         matrix = SparseMatrix()
         if compareBlocksOfDocs:
@@ -80,7 +75,6 @@ def main():
                    "./StoredData/minHash.txt", "./StoredData/ab.txt")
     if extest:
         executeTests(numberOfPermutations, numberOfBands, m)
-
 
 
 if __name__ == '__main__':

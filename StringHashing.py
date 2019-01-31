@@ -12,7 +12,6 @@ def hashShingle(line, m, alphabet):
 
 
 def generateHash(pdfname, txtdir, m, matrix, docnumber):
-    print("Matrix of hashes generation started")
     alphabet = {chr(i + 96): i for i in range(1, 27)}
     alphabet.update({1: 0})
     txtShingles = "./" + txtdir + "/" + pdfname + "Shingle.txt"
@@ -20,4 +19,3 @@ def generateHash(pdfname, txtdir, m, matrix, docnumber):
         for line in f:
             index = int(hashShingle(line, m, alphabet))
             matrix.addValueWithCheck(index, docnumber)
-    print("Matrix of hashes generation ended")
