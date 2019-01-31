@@ -14,11 +14,13 @@ def parsedata(pdfdir, txtdir, matrix, startcount, m, docsinfo, doTokenShingle=Fa
         for i in range(startcount, startcount + numFiles):
             tokenizePdf("Doc" + str(i), txtdir, pdfdir, docsinfo)
             generateShingles("Doc" + str(i), txtdir)
-        print("Shingles and Tokens generated")
+            print(".", end="", flush=True)
+        print("\nShingles and Tokens generated")
 
     print("Matrix of hashes generation started")
     for i in range(startcount, startcount + numFiles):
         generateHash("Doc" + str(i), txtdir, m, matrix, i)
-    print("Matrix of hashes generation ended")
+        print(".", end="", flush=True)
+    print("\nMatrix of hashes generation ended")
     print(" ")
     return numFiles

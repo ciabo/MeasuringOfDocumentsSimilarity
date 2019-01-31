@@ -58,7 +58,7 @@ def main():
     numberOfBands = 20  # number of bands in LSH phase
     m = 1000003
     createMinHashDatabaseMatrix = True
-    compareBlocksOfDocs = False
+    compareBlocksOfDocs = True
     searchOneDocumentSimilarDocs = False  # if a minHash matrix has been already created
     doTokenShingle = True
     extest = True
@@ -71,7 +71,7 @@ def main():
             numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, docsinfo, doTokenShingle)
             storeinformation(docsinfo)  # always after parsedata
         else:
-            numFiles = parsedata("Document", "txtdata", matrix, 0, m, docsinfo, doTokenShingle)
+            numFiles = parsedata("Document", "txt", matrix, 0, m, docsinfo, doTokenShingle)
             storeinformation(docsinfo)  # always after parsedata
         minHashes = minHash(matrix, numFiles, m, None, numberOfPermutations)
         SaveMinHash(minHashes)
@@ -86,7 +86,7 @@ def main():
         docsimilar("./Doc4", "./OneDocSimilar/", matrice, m, numberOfPermutations, numberOfBands,
                    "./StoredData/minHash.txt", "./StoredData/ab.txt")
     if extest:
-        executeTests(numberOfPermutations, numberOfBands, m)
+        executeTests(numberOfPermutations, numberOfBands, m, numFiles, "txtdata")
 
 
 if __name__ == '__main__':

@@ -3,18 +3,17 @@ from SparseMatrix import SparseMatrix
 from OneDocSimilar import docsimilar
 
 
-def executeTests(numberOfPermutations, numberOfBands, m):
+def executeTests(numberOfPermutations, numberOfBands, m, numFiles, txtdir):
     extest = True
-    numFiles = 40
     similarities = [80, 60, 50, 40, 20]
-    numberOfTests = 50
+    numberOfTests = 39
     testResultsList = {80: 0, 60: 0, 50: 0, 40: 0, 20: 0}
 
     for i in range(0, numberOfTests):
         editdoc = random.randint(0, numFiles - 1)
         for similarity in similarities:
             print("Start " + str(similarity) + "% similarity of Doc" + str(editdoc))
-            docName = test(editdoc, "txt", numFiles, similarity)
+            docName = test(editdoc, txtdir, numFiles, similarity)
             matrice = SparseMatrix()
             res = docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
                              "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
