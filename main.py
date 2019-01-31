@@ -8,7 +8,7 @@ from SparseMatrix import SparseMatrix
 from Save import SaveMinHash
 from OneDocSimilar import docsimilar
 from ParseData import parsedata
-from Test import test
+from Test import test, executeTests
 import os
 
 
@@ -53,10 +53,11 @@ def main():
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 20  # number of bands in LSH phase
     m = 1000003
-    createMinHashDatabaseMatrix = True
+    createMinHashDatabaseMatrix = False
     compareBlocksOfDocs = False
     searchOneDocumentSimilarDocs = False  # if a minHash matrix has been already created
     doTokenShingle = True
+    extest=True
     if createMinHashDatabaseMatrix:
         matrix = SparseMatrix()
         if compareBlocksOfDocs:
@@ -76,9 +77,10 @@ def main():
     if searchOneDocumentSimilarDocs:
         matrice = SparseMatrix()
         docsimilar("./Doc4", "./OneDocSimilar/", matrice, m, numberOfPermutations, numberOfBands,
-                   "./minHashes/minHash.txt", "./minHashes/ab.txt")
+                   "./StoredData/minHash.txt", "./StoredData/ab.txt")
+    if extest:
+        executeTests(numberOfPermutations, numberOfBands, m)
 
-    test("txt", 2, 6, 75)
 
 
 if __name__ == '__main__':
