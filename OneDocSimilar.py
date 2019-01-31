@@ -49,3 +49,4 @@ def docsimilar(docName, docdir, matrix, m, numberOfPermutations, numberOfBands, 
         results.pop(i)
 
     print(results)
+    return results
