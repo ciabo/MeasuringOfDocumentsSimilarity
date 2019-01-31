@@ -86,7 +86,7 @@ def main():
         docsimilar("./Doc4", "./OneDocSimilar/", matrice, m, numberOfPermutations, numberOfBands,
                    "./StoredData/minHash.txt", "./StoredData/ab.txt")
     if extest:
-        executeTests(numberOfPermutations, numberOfBands, m)
+        executeTests(numberOfPermutations, numberOfBands, m, "txtdata")
 
 
 if __name__ == '__main__':

@@ -3,17 +3,27 @@ from SparseMatrix import SparseMatrix
 from OneDocSimilar import docsimilar
 
 
-def executeTests(numberOfPermutations, numberOfBands, m, numFiles, txtdir):
+def executeTests(numberOfPermutations, numberOfBands, m, txtdir):
     extest = True
+    numFiles = 392
     similarities = [80, 60, 50, 40, 20]
     numberOfTests = 39
     testResultsList = {80: 0, 60: 0, 50: 0, 40: 0, 20: 0}
+
+    # documents information retrieval
+    docsinfo = {}
+    with open("./StoredData/docsinfo.txt", "r", encoding='utf-8') as f:
+        for line in f:
+            row = []
+            for word in line.split(','):
+                row.append(int(word.replace("\n", "")))
+            docsinfo[row[0]] = [row[1], row[2]]
 
     for i in range(0, numberOfTests):
         editdoc = random.randint(0, numFiles - 1)
         for similarity in similarities:
             print("Start " + str(similarity) + "% similarity of Doc" + str(editdoc))
-            docName = test(editdoc, txtdir, numFiles, similarity)
+            docName = test(editdoc, txtdir, numFiles, similarity, docsinfo)
             matrice = SparseMatrix()
             res = docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
                              "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
@@ -34,15 +44,7 @@ def executeTests(numberOfPermutations, numberOfBands, m, numFiles, txtdir):
     print(" ")
 
 
-def test(editdoc, docdir, numFiles, similarity):
-    # documents information retrieval
-    docsinfo = {}
-    with open("./StoredData/docsinfo.txt", "r", encoding='utf-8') as f:
-        for line in f:
-            row = []
-            for word in line.split(','):
-                row.append(int(word.replace("\n", "")))
-            docsinfo[row[0]] = [row[1], row[2]]
+def test(editdoc, docdir, numFiles, similarity, docsinfo):
 
     docToEdit = []
     with open("./" + docdir + "/Doc" + str(editdoc) + "token.txt", "r", encoding='utf-8') as f:
