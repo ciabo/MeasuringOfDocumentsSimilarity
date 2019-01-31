@@ -5,18 +5,19 @@ from OneDocSimilar import docsimilar
 
 def executeTests(numberOfPermutations, numberOfBands, m):
     extest = True
-    numFiles = 6
+    numFiles = 393
     similarities = [75, 50, 25]
-
-    editdoc = random.randint(0, numFiles - 1)
-    for similarity in similarities:
-        print("Start " + str(similarity) + "% similarity of Doc" + str(editdoc))
-        docName = test(editdoc, "txt", numFiles, similarity)
-        matrice = SparseMatrix()
-        docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
-                   "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
-        print("End " + str(similarity) + "% similarity of Doc" + str(editdoc))
-        print(" ")
+    numberOfTests=30
+    for i in range(0,30):
+        editdoc = random.randint(0, numFiles - 1)
+        for similarity in similarities:
+            print("Start " + str(similarity) + "% similarity of Doc" + str(editdoc))
+            docName = test(editdoc, "txt", numFiles, similarity)
+            matrice = SparseMatrix()
+            docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
+                       "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
+            print("End " + str(similarity) + "% similarity of Doc" + str(editdoc))
+            print(" ")
 
 
 def test(editdoc, docdir, numFiles, similarity):

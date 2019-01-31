@@ -53,11 +53,12 @@ def main():
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 20  # number of bands in LSH phase
     m = 1000003
-    createMinHashDatabaseMatrix = False
+    createMinHashDatabaseMatrix = True
     compareBlocksOfDocs = False
     searchOneDocumentSimilarDocs = False  # if a minHash matrix has been already created
     doTokenShingle = True
     extest=True
+
     if createMinHashDatabaseMatrix:
         matrix = SparseMatrix()
         if compareBlocksOfDocs:
