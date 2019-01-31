@@ -107,6 +107,8 @@ def tokenizePdf(pdfname, txtdir, pdfdir, docsinfo, singleDocument=False):
                         else:
                             tokenFile.write(word + " ")
                             tokennumber += 1
-    docsinfo[pdfname[len(pdfname) - 1:]] = [tokennumber, rownumber]  # fill the dictionary with the documents' infos
+    # fill the dictionary with the documents' infos
+    pdfnumber = int("".join(filter(str.isdigit, pdfname)))  # would be faster than regex
+    docsinfo[pdfnumber] = [tokennumber, rownumber]
     tokenFile.close()
     os.remove("./" + txtdir + "/" + pdfname + ".txt")  # erase the txt used to tokenize

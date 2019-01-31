@@ -47,7 +47,7 @@ def cleanResults(results, n):
 def storeinformation(docsinfo):
     docsinfoFile = open("./StoredData/docsinfo.txt", "w+", encoding='utf-8')
     for i in docsinfo:
-        docsinfoFile.write(i + ",")
+        docsinfoFile.write(str(i) + ",")
         docsinfoFile.write(str(docsinfo[i][0]) + ",")
         docsinfoFile.write(str(docsinfo[i][1]) + "\n")
     print("Docs' information stored")
@@ -58,7 +58,7 @@ def main():
     numberOfBands = 20  # number of bands in LSH phase
     m = 1000003
     createMinHashDatabaseMatrix = True
-    compareBlocksOfDocs = True
+    compareBlocksOfDocs = False
     searchOneDocumentSimilarDocs = False  # if a minHash matrix has been already created
     doTokenShingle = True
     extest = True
@@ -71,7 +71,7 @@ def main():
             numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, docsinfo, doTokenShingle)
             storeinformation(docsinfo)  # always after parsedata
         else:
-            numFiles = parsedata("Document", "txt", matrix, 0, m, docsinfo, doTokenShingle)
+            numFiles = parsedata("Document", "txtdata", matrix, 0, m, docsinfo, doTokenShingle)
             storeinformation(docsinfo)  # always after parsedata
         minHashes = minHash(matrix, numFiles, m, None, numberOfPermutations)
         SaveMinHash(minHashes)

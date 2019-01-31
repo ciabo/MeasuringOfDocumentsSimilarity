@@ -6,9 +6,9 @@ from LSH import LSH
 
 
 def docsimilar(docName, docdir, matrix, m, numberOfPermutations, numberOfBands, minHashesFile,
-               abfile,test=False):
+               abfile, test=False):
     minHashes = []
-    #retrieve the stored minHash matrix
+    # retrieve the stored minHash matrix
     with open(minHashesFile, "r", encoding='utf-8') as f:
         for line in f:
             l = []
@@ -16,9 +16,9 @@ def docsimilar(docName, docdir, matrix, m, numberOfPermutations, numberOfBands, 
                 if el != "\n":
                     l.append(int(el))
             minHashes.append(l)
-    docnumber=len(minHashes[0])
+    docnumber = len(minHashes[0])
     ablist = []
-    #retrieve the stored (a,b) values
+    # retrieve the stored (a,b) values
     with open(abfile, "r", encoding='utf-8') as f:
         for line in f:
             ab = []

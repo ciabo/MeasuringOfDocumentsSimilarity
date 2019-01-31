@@ -5,34 +5,35 @@ from OneDocSimilar import docsimilar
 
 def executeTests(numberOfPermutations, numberOfBands, m):
     extest = True
-    numFiles = 393
-    similarities = [80 , 60 , 50 , 40 , 20]
-    numberOfTests=50
-    testResultsList={80:0,60:0,50:0,40:0,20:0}
+    numFiles = 40
+    similarities = [80, 60, 50, 40, 20]
+    numberOfTests = 50
+    testResultsList = {80: 0, 60: 0, 50: 0, 40: 0, 20: 0}
 
-    for i in range(0,numberOfTests):
+    for i in range(0, numberOfTests):
         editdoc = random.randint(0, numFiles - 1)
         for similarity in similarities:
             print("Start " + str(similarity) + "% similarity of Doc" + str(editdoc))
             docName = test(editdoc, "txt", numFiles, similarity)
             matrice = SparseMatrix()
-            res=docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
-                       "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
-            #check if the results from docsimilar is not empty and if in the list there is at least an elemente = editdoc
+            res = docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
+                             "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
+            # check if the results from docsimilar is not empty and if in the list there is at least an elemente = editdoc
             if res:
-                ok=False
-                z=0
+                ok = False
+                z = 0
                 while ok is False and z < len(res):
                     for el in res[z]:
-                        if el==editdoc:
-                            ok=True
+                        if el == editdoc:
+                            ok = True
                 if ok:
-                    testResultsList[similarity] =  testResultsList[similarity] + 1
+                    testResultsList[similarity] = testResultsList[similarity] + 1
             print("End " + str(similarity) + "% similarity of Doc" + str(editdoc))
             print(" ")
-    print("Test results with "+numberOfBands+" bands and "+numberOfPermutations+"permutations: \n")
+    print("Test results with " + numberOfBands + " bands and " + numberOfPermutations + "permutations: \n")
     print(testResultsList)
     print(" ")
+
 
 def test(editdoc, docdir, numFiles, similarity):
     # documents information retrieval
