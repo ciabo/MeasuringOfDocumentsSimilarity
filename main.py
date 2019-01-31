@@ -44,6 +44,15 @@ def cleanResults(results, n):
     return results + newList
 
 
+def storeinformation(docsinfo):
+    docsinfoFile = open("./StoredData/docsinfo.txt", "w+", encoding='utf-8')
+    for i in docsinfo:
+        docsinfoFile.write(i + ",")
+        docsinfoFile.write(str(docsinfo[i][0]) + ",")
+        docsinfoFile.write(str(docsinfo[i][1]) + "\n")
+    print("Docs' information stored")
+
+
 def main():
     numberOfPermutations = 100  # number of permutation in the minHashing phase
     numberOfBands = 20  # number of bands in LSH phase
@@ -55,12 +64,15 @@ def main():
     extest = True
     if createMinHashDatabaseMatrix:
         matrix = SparseMatrix()
+        docsinfo = {}
         if compareBlocksOfDocs:
-            numFiles = parsedata("data2017", "txtdata", matrix, 0, m, doTokenShingle)
+            numFiles = parsedata("data2017", "txtdata", matrix, 0, m, docsinfo, doTokenShingle)
             n = numFiles
-            numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, doTokenShingle)
+            numFiles += parsedata("data2018", "txtdata", matrix, numFiles, m, docsinfo, doTokenShingle)
+            storeinformation(docsinfo)  # always after parsedata
         else:
-            numFiles = parsedata("Document", "txt", matrix, 0, m, doTokenShingle)
+            numFiles = parsedata("Document", "txt", matrix, 0, m, docsinfo, doTokenShingle)
+            storeinformation(docsinfo)  # always after parsedata
         minHashes = minHash(matrix, numFiles, m, None, numberOfPermutations)
         SaveMinHash(minHashes)
         results = LSH(minHashes, numberOfBands, numFiles)
