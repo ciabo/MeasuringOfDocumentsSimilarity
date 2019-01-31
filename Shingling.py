@@ -13,4 +13,5 @@ def generateShingles(pdfname, txtdir):
                 shinglesFile.write(line[i:k + 1] + "\n")
                 i += 1
                 k += 1
+    shinglesFile.close()
     print("Shingles  generated")

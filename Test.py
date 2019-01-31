@@ -2,22 +2,24 @@ import random
 from SparseMatrix import SparseMatrix
 from OneDocSimilar import docsimilar
 
-def executeTests(numberOfPermutations, numberOfBands, m):
-    extest=True
-    numFiles=6
-    similarities=[75,50,25]
 
+def executeTests(numberOfPermutations, numberOfBands, m):
+    extest = True
+    numFiles = 6
+    similarities = [75, 50, 25]
 
     editdoc = random.randint(0, numFiles - 1)
     for similarity in similarities:
-        docName=test(editdoc,"txt", numFiles, similarity)
+        print("Start " + str(similarity) + "% similarity of Doc" + str(editdoc))
+        docName = test(editdoc, "txt", numFiles, similarity)
         matrice = SparseMatrix()
         docsimilar(docName, "./Test/", matrice, m, numberOfPermutations, numberOfBands,
-                   "./StoredData/minHash.txt", "./StoredData/ab.txt",extest)
+                   "./StoredData/minHash.txt", "./StoredData/ab.txt", extest)
+        print("End " + str(similarity) + "% similarity of Doc" + str(editdoc))
+        print(" ")
 
 
 def test(editdoc, docdir, numFiles, similarity):
-
     # documents information retrieval
     docsinfo = {}
     with open("./StoredData/docsinfo.txt", "r", encoding='utf-8') as f:
@@ -32,6 +34,7 @@ def test(editdoc, docdir, numFiles, similarity):
         for line in f:
             for word in line.split(" "):
                 docToEdit.append(word)
+    docToEdit.pop()  # remove the space at the end
 
     numberOfToken = docsinfo[editdoc][0] / float(docsinfo[editdoc][1])  # token per row of the document
 
@@ -42,7 +45,7 @@ def test(editdoc, docdir, numFiles, similarity):
             swapdoc = random.randint(0, numFiles - 1)  # document random choosed
             while swapdoc == editdoc:  # check if the document is the same
                 swapdoc = random.randint(0, numFiles - 1)
-            rowToSwap = random.randint(0, docsinfo[swapdoc][1]-1)  # row random choosed in random doc
+            rowToSwap = random.randint(0, docsinfo[swapdoc][1] - 1)  # row random choosed in random doc
 
             # retrieve list of tokens
             docToSwap = []
@@ -50,10 +53,10 @@ def test(editdoc, docdir, numFiles, similarity):
                 for line in f:
                     for word in line.split(" "):
                         docToSwap.append(word)
+            docToSwap.pop()  # remove the space at the end
 
             # token swap
-            numberOfTokenSW = docsinfo[swapdoc][0] / float(
-                docsinfo[swapdoc][1])  # token per row of the random document
+            numberOfTokenSW = docsinfo[swapdoc][0] / float(docsinfo[swapdoc][1])  # token per row of the random document
             for token, swtoken in zip(range(int(j * numberOfToken), int(j * numberOfToken + numberOfToken)),
                                       range(int(rowToSwap * numberOfTokenSW),
                                             int(rowToSwap * numberOfTokenSW + numberOfToken))):
