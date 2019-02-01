@@ -8,7 +8,7 @@ def executeTests(numberOfPermutations, numberOfBands, m, txtdir):
     extest = True
     numFiles = 392
     similarities = [80, 60, 50, 40, 20]
-    numberOfTests = 39
+    numberOfTests = 50
     testResultsList = {80: 0, 60: 0, 50: 0, 40: 0, 20: 0}
 
     # documents information retrieval
@@ -40,6 +40,7 @@ def executeTests(numberOfPermutations, numberOfBands, m, txtdir):
                 if ok:
                     testResultsList[similarity] = testResultsList[similarity] + 1
             print("End " + str(similarity) + "% similarity of Doc" + str(editdoc))
+            print("Test number: " + str(i))
             print(" ")
     print("Number of Test: " + str(numberOfTests))
     print("Test results with " + str(numberOfBands) + " bands and " + str(numberOfPermutations) + " permutations: \n")

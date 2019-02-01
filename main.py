@@ -55,7 +55,7 @@ def storeinformation(docsinfo):
 
 def main():
     numberOfPermutations = 100  # number of permutation in the minHashing phase
-    numberOfBands = 20  # number of bands in LSH phase
+    numberOfBands = 25  # number of bands in LSH phase
     m = 1000003
     createMinHashDatabaseMatrix = False
     compareBlocksOfDocs = False
